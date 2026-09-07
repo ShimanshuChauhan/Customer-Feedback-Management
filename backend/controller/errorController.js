@@ -1,3 +1,10 @@
+import AppError from "../utils/appError.js";
+
+const handleValidationErrorDB = (err) => {
+  const messages = Object.values(err.errors).map((error) => error.message);
+  return new AppError(`Invalid input data: ${messages.join(". ")}`, 400);
+};
+
 function sendErrorProduction(err, res) {
   if (err.isOperational) {
     res.status(err.statusCode).json({
@@ -23,6 +30,11 @@ function sendErrorDevelopment(err, res) {
 }
 
 export default (err, req, res, next) => {
+
+  if (err.name === "ValidationError") {
+    err = handleValidationErrorDB(err);
+  }
+
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "error";
 
