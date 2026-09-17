@@ -7,3 +7,7 @@ export const createFeedback = async (feedbackData) => {
 export const getAllFeedback = async () => {
   return Feedback.find();
 }
+
+export const getFeedbackById = async (feedbackId) => {
+  return Feedback.findById(feedbackId);
+};
