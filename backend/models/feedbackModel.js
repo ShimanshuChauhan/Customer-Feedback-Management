@@ -42,9 +42,9 @@ const feedbackSchema = new mongoose.Schema(
   }
 );
 
-// feedbackSchema.pre(/^find/, function () {
-//   this.select("-__v -createdAt -updatedAt");
-// });
+feedbackSchema.pre(/^find/, function () {
+  this.select("-__v -createdAt -updatedAt");
+});
 
 const Feedback =
   mongoose.models.Feedback || mongoose.model("Feedback", feedbackSchema);
