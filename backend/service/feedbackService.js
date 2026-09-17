@@ -11,3 +11,7 @@ export const getAllFeedback = async () => {
 export const getFeedbackById = async (feedbackId) => {
   return Feedback.findById(feedbackId);
 };
+
+export const deleteFeedback = async (feedbackId) => {
+  return Feedback.findByIdAndDelete(feedbackId);
+}
