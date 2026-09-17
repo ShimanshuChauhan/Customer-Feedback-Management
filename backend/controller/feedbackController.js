@@ -1,5 +1,6 @@
 import catchAsync from "../utils/catchAsync.js";
 import { createFeedback as createFeedbackService } from "../service/feedbackService.js";
+import { getAllFeedback as getAllFeedbackService } from "../service/feedbackService.js";
 
 // Create a new feedback
 export const createFeedback = catchAsync(async (req, res, next) => {
@@ -24,3 +25,14 @@ export const createFeedback = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+export const getAllFeedback = catchAsync(async (req, res, next) => {
+  const feedbackList = await getAllFeedbackService();
+  res.status(200).json({
+    status: "success",
+    results: feedbackList.length,
+    data: {
+      feedbackList,
+    },
+  });
+})

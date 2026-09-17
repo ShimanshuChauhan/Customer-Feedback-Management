@@ -1,8 +1,10 @@
 import express from 'express';
-import {createFeedback} from '../controller/feedbackController.js';
+import {createFeedback, getAllFeedback} from '../controller/feedbackController.js';
 
 const router = express.Router();
 
-router.post('/', createFeedback); 
+router
+  .get('/', getAllFeedback)
+  .post('/', createFeedback); 
 
 export default router;
