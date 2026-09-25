@@ -31,10 +31,14 @@ const feedbackSchema = new mongoose.Schema(
       enum: ["positive", "neutral", "negative", "unknown"],
       default: "unknown",
     },
-    category: {
+    themes :{
+      type: [String],
+      default: [],
+    },
+    suggestedResponse: {
       type: String,
       trim: true,
-      maxlength: [50, "Category cannot exceed 50 characters"],
+      maxlength: [500, "Suggested response cannot exceed 500 characters"],
     },
   },
   {
