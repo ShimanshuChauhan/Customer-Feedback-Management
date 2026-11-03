@@ -1,7 +1,7 @@
+import FeedbackPage from "./feedbacks/FeedbackPage"
+
 function App() {
-  return (
-    <></>
-  );
+  return <FeedbackPage />;
 }
 
-export default App
+export default App;
