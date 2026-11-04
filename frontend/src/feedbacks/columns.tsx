@@ -2,6 +2,7 @@
 
 import { createColumnHelper } from "@tanstack/react-table"
 
+import { Badge } from "@/components/ui/badge"
 import { type DataTableFeatures } from "./data-table-features"
 
 // This type is used to define the shape of our data.
@@ -34,6 +35,9 @@ export const columns = columnHelper.columns([
   }),
   columnHelper.accessor("sentiment", {
     header: "Sentiment",
+    cell: (info) => (
+      <Badge variant={info.getValue()}>{info.getValue()}</Badge>
+    ),
   }),
   columnHelper.accessor("themes", {
     header: "Themes",
