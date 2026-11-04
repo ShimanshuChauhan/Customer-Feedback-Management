@@ -4,18 +4,7 @@ import { createColumnHelper } from "@tanstack/react-table"
 
 import { Badge } from "@/components/ui/badge"
 import { type DataTableFeatures } from "./data-table-features"
-
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-export type Feedback = {
-  customerName: string
-  email: string
-  message: string
-  rating: number
-  sentiment: "positive" | "neutral" | "negative"
-  themes: string[]
-  suggestedResponse: string
-}
+import { type Feedback } from "./feedback"
 
 // Use `accessor` for data columns and `display` for columns without one.
 const columnHelper = createColumnHelper<DataTableFeatures, Feedback>()
@@ -32,17 +21,25 @@ export const columns = columnHelper.columns([
   }),
   columnHelper.accessor("rating", {
     header: "Rating",
+    cell: (info) => info.getValue() ?? "—",
   }),
   columnHelper.accessor("sentiment", {
     header: "Sentiment",
-    cell: (info) => (
-      <Badge variant={info.getValue()}>{info.getValue()}</Badge>
-    ),
+    cell: (info) => {
+      const sentiment = info.getValue()
+      return (
+        <Badge variant={sentiment === "unknown" ? "neutral" : sentiment}>
+          {sentiment === "unknown" ? "Unknown" : sentiment}
+        </Badge>
+      )
+    },
   }),
   columnHelper.accessor("themes", {
     header: "Themes",
+    cell: (info) => info.getValue().join(", ") || "—",
   }),
   columnHelper.accessor("suggestedResponse", {
     header: "Suggested Response",
+    cell: (info) => info.getValue() || "—",
   }),
 ])

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
-import { columns, type Feedback } from "./columns"
+import { columns } from "./columns"
+import { loadFeedback, type Feedback } from "./feedback"
 import { FeedbackTable } from "./feedback-table"
 
 export default function FeedbackPage() {
@@ -8,25 +9,21 @@ export default function FeedbackPage() {
   const [error, setError] = useState("")
 
   useEffect(() => {
-    async function loadFeedback() {
+    const controller = new AbortController()
+
+    async function load() {
       try {
-        const apiUrl = (import.meta.env.VITE_API_URL ?? "").replace(/\/+$/, "")
-        const response = await fetch(`${apiUrl}/api/feedback`)
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch feedback")
-        }
-
-        const body = await response.json()
-        setData(body.data.feedbackList)
+        const feedback = await loadFeedback({ signal: controller.signal })
+        if (!controller.signal.aborted) setData(feedback)
       } catch {
-        setError("Could not load feedback")
+        if (!controller.signal.aborted) setError("Could not load feedback")
       } finally {
-        setLoading(false)
+        if (!controller.signal.aborted) setLoading(false)
       }
     }
 
-    loadFeedback()
+    void load()
+    return () => controller.abort()
   }, [])
 
   if (loading) return <p>Loading...</p>

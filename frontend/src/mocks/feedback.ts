@@ -1,4 +1,5 @@
 import { http, HttpResponse } from "msw/http"
+import { type Feedback } from "../feedbacks/feedback"
 
 const feedbackList = [
   {
@@ -81,7 +82,15 @@ const feedbackList = [
     themes: ["class variety", "feature requests"],
     suggestedResponse: "Thank you! We are glad you enjoy the classes, and we appreciate your suggestion to add favourite instructors.",
   },
-]
+  {
+    _id: "6ade38fbab2fde1b2d466da1",
+    customerName: "Meera Shah",
+    email: "meera@example.com",
+    message: "Please add more weekend sessions.",
+    sentiment: "unknown",
+    themes: [],
+  },
+] satisfies Feedback[]
 
 export const feedbackHandlers = [
   http.get("/api/feedback", () => {
