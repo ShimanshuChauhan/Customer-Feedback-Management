@@ -7,7 +7,7 @@ import { type DataTableFeatures } from "./data-table-features"
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type Feedback = {
-  name: string
+  customerName: string
   email: string
   message: string
   rating: number
@@ -20,7 +20,7 @@ export type Feedback = {
 const columnHelper = createColumnHelper<DataTableFeatures, Feedback>()
 
 export const columns = columnHelper.columns([
-  columnHelper.accessor("name", {
+  columnHelper.accessor("customerName", {
     header: "Name",
   }),
   columnHelper.accessor("email", {
