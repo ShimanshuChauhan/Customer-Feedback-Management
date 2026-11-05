@@ -15,8 +15,11 @@ export default function FeedbackPage() {
       try {
         const feedback = await loadFeedback({ signal: controller.signal })
         if (!controller.signal.aborted) setData(feedback)
-      } catch {
-        if (!controller.signal.aborted) setError("Could not load feedback")
+      } catch (error) {
+        if (!controller.signal.aborted) {
+          console.error("Feedback loading failed:", error)
+          setError("Could not load feedback")
+        }
       } finally {
         if (!controller.signal.aborted) setLoading(false)
       }
